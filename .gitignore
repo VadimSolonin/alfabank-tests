@@ -17,6 +17,7 @@ out/
 !**/src/test/**/out/
 settings.gradle
 .idea
+allure-report
 
 ### Eclipse ###
 .apt_generated
