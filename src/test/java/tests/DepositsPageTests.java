@@ -1,16 +1,19 @@
 package tests;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.DepositsPage;
 import pages.components.VerifyUrlComponent;
 
 import static io.qameta.allure.Allure.step;
 
+@Tag("deposit_opening_form")
 public class DepositsPageTests extends TestBase {
 
     VerifyUrlComponent verifyUrl = new VerifyUrlComponent();
     DepositsPage depositsPage = new DepositsPage();
+    TestData testData = new TestData();
 
     @Test
     @DisplayName("Переход к форме заполнения заявки на открытие вклада")
@@ -33,7 +36,7 @@ public class DepositsPageTests extends TestBase {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
         step("Открытие полной формы заявки", () -> {
-            depositsPage.setSurnameField("П")
+            depositsPage.setSurnameField(testData.randomSurname)
                     .submitDepositApplication()
                     .clearLastNameInputValue()
                     .submitDepositApplication();
@@ -55,9 +58,8 @@ public class DepositsPageTests extends TestBase {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
         step("Открытие полной формы заявки", () -> {
-            depositsPage.setSurnameField("П")
+            depositsPage.setSurnameField(testData.randomSurname)
                     .submitDepositApplication();
-
         });
         step("Нажатие на чекбокс `По паспорту без отчества", () -> {
             depositsPage.clickHasMiddleNameCheckbox();
@@ -74,7 +76,7 @@ public class DepositsPageTests extends TestBase {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
         step("Заполнение поля даты рождения единичным числовым значением", () -> {
-            depositsPage.setPassportBirthDateField("1")
+            depositsPage.setPassportBirthDateField(testData.randomNumber)
                     .submitDepositApplication();
         });
         step("Проверка поля даты рождения на наличие текста с пометкой о вводе некорректного значения", () -> {
@@ -89,7 +91,7 @@ public class DepositsPageTests extends TestBase {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
         step("Заполнение поля номера телефона единичным числовым значением", () -> {
-            depositsPage.setPhoneInputField("1")
+            depositsPage.setPhoneInputField(testData.randomNumber)
                     .submitDepositApplication();
         });
         step("Проверка поля номера телефона на наличие текста с пометкой о вводе некорректного значения", () -> {
@@ -104,7 +106,7 @@ public class DepositsPageTests extends TestBase {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
         step("Заполнение поля почты единичным числовым значением", () -> {
-            depositsPage.setEmailInputValue("1")
+            depositsPage.setEmailInputValue(testData.randomNumber)
                     .submitDepositApplication();
         });
         step("Проверка поля почты на наличие текста с пометкой о вводе некорректного значения", () -> {

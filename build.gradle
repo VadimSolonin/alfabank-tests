@@ -58,20 +58,8 @@ test {
     useJUnitPlatform()
 }
 
-//task check_required_fields(type: Test) {
-//    useJUnitPlatform {
-//        includeTags("RequiredFields")
-//    }
-//}
-//
-//task remote_test(type: Test) {
-//    useJUnitPlatform {
-//        includeTags("remote")
-//    }
-//}
-//
-//task regress_tests(type: Test) {
-//    useJUnitPlatform {
-//        includeTags("Regress")
-//    }
-//}
+task regress_tests(type: Test) {
+    useJUnitPlatform {
+        includeTags("deposit_opening_form")
+    }
+}
