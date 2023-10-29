@@ -12,7 +12,8 @@ public class DepositsPage {
     SelenideElement openDepositButton = $("[data-widget-name=ButtonV2]"),
             submitDepositApplication = $("[data-test-id=button]"),
             fullNameInput = $("[name=fullName]"),
-            genderTags = $("[data-test-id=gender-tags]").$(withText("Поле обязательно для заполнения")),
+            genderTags = $("[data-test-id=gender-tags]")
+                    .$(withText("Поле обязательно для заполнения")),
             lastNameInput = $("[name=lastName]"),
             middleName = $("[name=middleName]"),
             passportBirthDateField = $("[name=passportBirthDateField]"),
@@ -21,6 +22,9 @@ public class DepositsPage {
             phoneFieldError = $("[data-test-id=captionError-phone]"),
             emailInput = $("[data-test-id=email-input]"),
             emailError = $("[data-test-id=captionError-email]"),
+            residentNotResident = $("[data-test-id=resident-notResident]"),
+            textNotResidentInformation = $("[data-test-id=form]")
+                    .$(withText("Для оформления заявки на получение карты, пожалуйста, обратитесь в ближайшее отделение Альфа-Банка.")),
             hasMiddleName = $("[name=hasMiddleName]").sibling(1);
 
 
@@ -99,6 +103,14 @@ public class DepositsPage {
     public DepositsPage verifyEmailFieldError() {
         emailError.shouldBe(visible)
                 .shouldHave(text("Email введен некорректно. Пример: example@domain.ru"));
+        return this;
+    }
+    public DepositsPage clickNotResidentButton() {
+        residentNotResident.click();
+        return this;
+    }
+    public DepositsPage verifyNotResidentTextInformation() {
+        textNotResidentInformation.shouldBe(exist);
         return this;
     }
 
