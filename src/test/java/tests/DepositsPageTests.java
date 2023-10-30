@@ -16,7 +16,7 @@ public class DepositsPageTests extends TestBase {
     TestData testData = new TestData();
 
     @Test
-    @DisplayName("Переход к форме заполнения заявки на открытие вклада")
+    @DisplayName("Переход к форме заполнения заявки на открытие вклада при нажатии `Открыть вклад`")
     void scrollToOpenDepositApplicationTest() {
         step("Открытие страницы вклада", () -> {
             depositsPage.openPage("/make-money/deposits/alfa");
@@ -30,7 +30,7 @@ public class DepositsPageTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Проверка обязательности всех полей заявки")
+    @DisplayName("Проверка обязательности всех полей заявки на открытие вклада")
     void checkDepositApplicationRequiredFieldsTest() {
         step("Открытие страницы вклада", () -> {
             depositsPage.openPage("/make-money/deposits/alfa");
@@ -85,12 +85,12 @@ public class DepositsPageTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Заполнение поля мобильного телефона некорректным значением")
+    @DisplayName("Заполнение поля мобильного телефона неполным значением")
     void setPhoneInputFieldIncorrectValueTest() {
         step("Открытие страницы вклада", () -> {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
-        step("Заполнение поля номера телефона единичным числовым значением", () -> {
+        step("Заполнение поля номера телефона коротким числовым значением", () -> {
             depositsPage.setPhoneInputField(testData.randomNumber)
                     .submitDepositApplication();
         });
@@ -105,7 +105,7 @@ public class DepositsPageTests extends TestBase {
         step("Открытие страницы вклада", () -> {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
-        step("Заполнение поля почты единичным числовым значением", () -> {
+        step("Заполнение поля почты числовым значением", () -> {
             depositsPage.setEmailInputValue(testData.randomNumber)
                     .submitDepositApplication();
         });
@@ -115,7 +115,7 @@ public class DepositsPageTests extends TestBase {
     }
 
     @Test
-    @DisplayName("Отображение информационного блока для клиента без гражданства РФ")
+    @DisplayName("Отображение информационного блока для клиентов без гражданства РФ")
     void viewNotResidentButtonModalTextTest() {
         step("Открытие страницы вклада", () -> {
             depositsPage.openPage("/make-money/deposits/alfa");
