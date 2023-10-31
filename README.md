@@ -22,17 +22,17 @@
 ## Описание
 Демо-проект с автотестами на Java. В качестве примера была выбрана страница "Вклады".
 Особенности проекта:
-- Page Object шаблон проектирования;
-- Возможность запуска тестов: локально, удалённо, по тегам; 
-- Faker для генерации данных;
+- Page Object шаблон проектирования
+- Возможность запуска тестов: локально, удалённо, по тегам
+- Faker для генерации данных
 - По итогу прохождения автотестов генерируется Allure отчет. Содержание отчета:
-    - Шаги теста;
-    - Скриншот страницы на последнем шаге;
-    - Исходный код страницы в браузере;
-    - Логи консоли браузера;
-    - Видео выполнения автотеста.
-- Интеграция с Jira;
-- Уведомление о результатах прохождения в Telegram.
+    - Шаги теста
+    - Скриншот страницы на последнем шаге
+    - Исходный код страницы в браузере
+    - Логи консоли браузера
+    - Видео выполнения автотеста
+- Интеграция с Jira
+- Уведомление о результатах прохождения в Telegram
 
 ## Стек технологий
 | IDEA | Java | GitHub | JUnit5 | Gradle | Selenide | Selenoid | Allure | Jenkins | Allure TO| Jira |
@@ -58,11 +58,13 @@
 ```
 gradle clean regress_tests
 ```
-3. Выполнить запрос на формирование отчета:
+
+Дополнительные команды:
+1. Выполнить запрос на формирование отчета:
 ```
 gradle allureReport
 ```
-4. Открыть отчет в браузере:
+2. Открыть отчет в браузере:
 ```
 gradle allureServe
 ```
@@ -77,13 +79,13 @@ gradle clean regress_tests
 ```
 | Параметры, которые можно добавить | Расшифровка | Значение по умолчанию |
 |----------|----------|----------|
-| -DbrowserName=${BROWSER}| chrome   | chrome   |
+| -DbrowserName=${BROWSER}| Название браузера   | chrome   |
 | -DbrowserVersion=${BROWSER_VERSION} | Номер версии браузера   | 100   |
 | -DbrowserSize=${BROWSER_SIZE}| Разрешение экрана браузера   | 1920x1080   |
 | -DremoteUrl=${REMOTE_URL}| адрес удаленного сервера, на котором будут запускаться тесты   | прописан в Jenkins   |
 </details>
 
-## Cборка тестов в Jenkins(<b><a target="_blank" href="https://jenkins.autotests.cloud/job/demo-alfabank-tests/3/allure/">Jenkins</a></b>)
+## Cборка тестов в <b><a target="_blank" href="https://jenkins.autotests.cloud/job/demo-alfabank-tests/3/allure/">Jenkins</a></b>
 <img src="images/screenshots/jenkins-project.png">
 
 ## Интеграция с Allure report
@@ -91,6 +93,9 @@ gradle clean regress_tests
 <img src="images/screenshots/allure-main-report.png">
 
 #### Развернутый результат прохождения тестов:
+1. Общий список автотестов
+2. Содержание автотеста
+3. Вложения
 <img src="images/screenshots/allure-suites.png">
 
 
