@@ -53,12 +53,18 @@
 <details>
    <summary>Локальный запуск</summary>
    
+   
 1. Клонировать проект и открыть в IntelliJ IDEA
-2. Запустить тесты из терминала командой:
+2. Запустить все тесты из терминала командой:
 ```
-gradle clean regress_tests
+gradle clean test
 ```
+3. Запустить тесты, относящиеся к заполнению заявки на регистрацию, можно по тегу `applicationFields`:
 
+```
+gradle clean applicationFields
+```
+   
 Дополнительные команды:
 1. Выполнить запрос на формирование отчета:
 ```
@@ -74,21 +80,22 @@ gradle allureServe
 <details>
    <summary>Удаленный запуск</summary>
 
+Для запуска всех тестов:
 ```
-gradle clean regress_tests
+gradle clean test
 ```
 | Параметры, которые можно добавить | Расшифровка | Значение по умолчанию |
 |----------|----------|----------|
 | -DbrowserName=${BROWSER}| Название браузера   | chrome   |
 | -DbrowserVersion=${BROWSER_VERSION} | Номер версии браузера   | 100   |
 | -DbrowserSize=${BROWSER_SIZE}| Разрешение экрана браузера   | 1920x1080   |
-| -DremoteUrl=${REMOTE_URL}| адрес удаленного сервера, на котором будут запускаться тесты   | прописан в Jenkins   |
+| -DremoteUrl=${REMOTE_URL}| Адрес удаленного сервера, на котором будут запускаться тесты   | Прописан в Jenkins   |
 </details>
 
-## Cборка тестов в <b><a target="_blank" href="https://jenkins.autotests.cloud/job/demo-alfabank-tests/3/allure/">Jenkins</a></b>
+## Cборка тестов в <b><a target="_blank" href="https://jenkins.autotests.cloud/job/demo-alfabank-tests/">Jenkins</a></b>
 <img src="images/screenshots/jenkins-project.png">
 
-## Интеграция с Allure report
+## Интеграция с <b><a target="_blank" href="https://jenkins.autotests.cloud/job/demo-alfabank-tests/8/allure/">Allure report</a></b>
 #### Диаграммы прохождения тестов:
 <img src="images/screenshots/allure-main-report.png">
 
@@ -99,11 +106,11 @@ gradle clean regress_tests
 <img src="images/screenshots/allure-suites.png">
 
 
-## Интеграция с Allure TestOps
+## Интеграция с <b><a target="_blank" href="https://allure.autotests.cloud/project/3735/dashboards">Allure TestOps</a></b>
 Диаграммы прохождения тестов:
 <img src="images/screenshots/allure-testops-dashboards.png">
 
-## Интеграция с Jira
+## Интеграция с <b><a target="_blank" href="https://jira.autotests.cloud/browse/HOMEWORK-924">Jira</a></b>
 <img src="images/screenshots/jira-integration.png">
 
 ## Уведомления в Telegram с использованием бота
