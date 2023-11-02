@@ -58,8 +58,14 @@ test {
     useJUnitPlatform()
 }
 
-task regress_tests(type: Test) {
+task deposit(type: Test) {
     useJUnitPlatform {
-        includeTags("deposit_opening_form")
+        includeTags("deposit")
+    }
+}
+
+task applicationFields(type: Test) {
+    useJUnitPlatform {
+        includeTags("applicationFields")
     }
 }

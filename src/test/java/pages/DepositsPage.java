@@ -11,9 +11,9 @@ public class DepositsPage {
 
     SelenideElement openDepositButton = $("[data-widget-name=ButtonV2]"),
             submitDepositApplication = $("[data-test-id=button]"),
+            headerMainLogo = $("[data-test-id=Main-Header-Main-DesktopLogo]"),
             fullNameInput = $("[name=fullName]"),
-            genderTags = $("[data-test-id=gender-tags]")
-                    .$(withText("Поле обязательно для заполнения")),
+            genderTags = $("[data-test-id=gender-tags]"),
             lastNameInput = $("[name=lastName]"),
             middleName = $("[name=middleName]"),
             passportBirthDateField = $("[name=passportBirthDateField]"),
@@ -33,13 +33,18 @@ public class DepositsPage {
         return this;
     }
 
-    public DepositsPage clickOpenDepositButton() {
-        openDepositButton.$(withText("Открыть вклад")).click();
+    public DepositsPage clickOpenDepositButton(String text) {
+        openDepositButton.$(withText(text)).click();
         return this;
     }
 
-    public DepositsPage submitDepositApplication() {
-        submitDepositApplication.find(byText("Продолжить")).click();
+    public DepositsPage submitDepositApplication(String text) {
+        submitDepositApplication.find(byText(text)).click();
+        return this;
+    }
+
+    public DepositsPage clickHeaderMainLogo() {
+        headerMainLogo.click();
         return this;
     }
 
@@ -53,15 +58,15 @@ public class DepositsPage {
         return this;
     }
 
-    public DepositsPage checkRequiredFieldError(String fieldName) {
+    public DepositsPage checkRequiredFieldError(String fieldName, String text) {
         $("[data-test-id=captionError-" + fieldName + "]").shouldBe(visible)
                 .shouldHave(cssValue("color", "rgba(239, 49, 36, 0.9)"))
-                .shouldHave(text("Поле обязательно для заполнения"));
+                .shouldHave(text(text));
         return this;
     }
 
-    public DepositsPage checkGenderRequiredFieldError() {
-        genderTags.shouldBe(visible)
+    public DepositsPage checkGenderRequiredFieldError(String text) {
+        genderTags.shouldBe(visible).$(withText(text))
                 .shouldHave(cssValue("color", "rgba(239, 49, 36, 0.9)"));
         return this;
     }
@@ -81,18 +86,18 @@ public class DepositsPage {
         return this;
     }
 
-    public DepositsPage verifyPassportBirthDateFieldError() {
+    public DepositsPage verifyPassportBirthDateFieldError(String text) {
         passportBirthDateFieldError.shouldBe(visible)
-                .shouldHave(text("Указана некорректная дата"));
+                .shouldHave(text(text));
         return this;
     }
     public DepositsPage setPhoneInputField(String value) {
         phoneInput.setValue(value);
         return this;
     }
-    public DepositsPage verifyPhoneFieldError() {
+    public DepositsPage verifyPhoneFieldError(String text) {
         phoneFieldError.shouldBe(visible)
-                .shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67"));
+                .shouldHave(text(text));
         return this;
     }
 
@@ -100,9 +105,9 @@ public class DepositsPage {
         emailInput.setValue(value);
         return this;
     }
-    public DepositsPage verifyEmailFieldError() {
+    public DepositsPage verifyEmailFieldError(String text) {
         emailError.shouldBe(visible)
-                .shouldHave(text("Email введен некорректно. Пример: example@domain.ru"));
+                .shouldHave(text(text));
         return this;
     }
     public DepositsPage clickNotResidentButton() {

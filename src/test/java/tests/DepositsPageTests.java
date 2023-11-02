@@ -1,20 +1,36 @@
 package tests;
 
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import pages.DepositsPage;
-import pages.components.VerifyUrlComponent;
+import utils.Helpers;
 
 import static io.qameta.allure.Allure.step;
-
-@Tag("deposit_opening_form")
+@Owner("Vadim Solonin")
+@Tags({@Tag("ui"), @Tag("deposit")})
 public class DepositsPageTests extends TestBase {
 
-    VerifyUrlComponent verifyUrl = new VerifyUrlComponent();
     DepositsPage depositsPage = new DepositsPage();
     TestData testData = new TestData();
 
+    @Test
+    @DisplayName("Возвращение на главную страницу при нажатии на логотип в заголовке")
+    void returnToMainPage() {
+        step("Открытие страницы вклада", () -> {
+            depositsPage.openPage("/make-money/deposits/alfa");
+        });
+        step("Нажатие на логотип главной страницы", () -> {
+            depositsPage.clickHeaderMainLogo();
+        });
+        step("Проверка нахождения на главной странице", () -> {
+            Helpers.verifyPageUrl("https://alfabank.ru/");
+            Helpers.verifyPageTitle("Альфа-Банк - кредитные и дебетовые карты, " +
+                    "кредиты наличными, автокредитование, ипотека и другие банковские услуги физическим и юридическим лицам – Альфа-Банк");
+        });
+    }
     @Test
     @DisplayName("Переход к форме заполнения заявки на открытие вклада при нажатии `Открыть вклад`")
     void scrollToOpenDepositApplicationTest() {
@@ -22,14 +38,15 @@ public class DepositsPageTests extends TestBase {
             depositsPage.openPage("/make-money/deposits/alfa");
         });
         step("Нажатие на кнопку `Открыть вклад`", () -> {
-            depositsPage.clickOpenDepositButton();
+            depositsPage.clickOpenDepositButton("Открыть вклад");
         });
         step("Проверка смены адреса ресурса на `alfa/#HowToGet`", () -> {
-            verifyUrl.verifyPageUrl("https://alfabank.ru/make-money/deposits/alfa/#HowToGet");
+            Helpers.verifyPageUrl("https://alfabank.ru/make-money/deposits/alfa/#HowToGet");
         });
     }
 
     @Test
+    @Tag("applicationFields")
     @DisplayName("Проверка обязательности всех полей заявки на открытие вклада")
     void checkDepositApplicationRequiredFieldsTest() {
         step("Открытие страницы вклада", () -> {
@@ -37,21 +54,22 @@ public class DepositsPageTests extends TestBase {
         });
         step("Открытие полной формы заявки", () -> {
             depositsPage.setSurnameField(testData.randomSurname)
-                    .submitDepositApplication()
+                    .submitDepositApplication("Продолжить")
                     .clearLastNameInputValue()
-                    .submitDepositApplication();
+                    .submitDepositApplication("Продолжить");
         });
         step("Проверка каждого поля на наличие текста с пометкой об обязательности", () -> {
-            depositsPage.checkRequiredFieldError("lastName")
-                    .checkRequiredFieldError("firstName")
-                    .checkRequiredFieldError("middleName")
-                    .checkGenderRequiredFieldError()
-                    .checkRequiredFieldError("passportBirthDateField")
-                    .checkRequiredFieldError("phone");
+            depositsPage.checkRequiredFieldError("lastName", "Поле обязательно для заполнения")
+                    .checkRequiredFieldError("firstName", "Поле обязательно для заполнения")
+                    .checkRequiredFieldError("middleName", "Поле обязательно для заполнения")
+                    .checkGenderRequiredFieldError("Поле обязательно для заполнения")
+                    .checkRequiredFieldError("passportBirthDateField", "Поле обязательно для заполнения")
+                    .checkRequiredFieldError("phone", "Поле обязательно для заполнения");
         });
     }
 
     @Test
+    @Tag("applicationFields")
     @DisplayName("Проверка отключения поля заполнения отчества при нажатии `По паспорту без отчества`")
     void clickHasMiddleNameDisableCheckboxTest() {
         step("Открытие страницы вклада", () -> {
@@ -59,7 +77,7 @@ public class DepositsPageTests extends TestBase {
         });
         step("Открытие полной формы заявки", () -> {
             depositsPage.setSurnameField(testData.randomSurname)
-                    .submitDepositApplication();
+                    .submitDepositApplication("Продолжить");
         });
         step("Нажатие на чекбокс `По паспорту без отчества", () -> {
             depositsPage.clickHasMiddleNameCheckbox();
@@ -70,6 +88,7 @@ public class DepositsPageTests extends TestBase {
     }
 
     @Test
+    @Tag("applicationFields")
     @DisplayName("Заполнение поля даты рождения некорректным значением")
     void setPassportBirthDateFieldIncorrectValueTest() {
         step("Открытие страницы вклада", () -> {
@@ -77,14 +96,15 @@ public class DepositsPageTests extends TestBase {
         });
         step("Заполнение поля даты рождения единичным числовым значением", () -> {
             depositsPage.setPassportBirthDateField(testData.randomNumber)
-                    .submitDepositApplication();
+                    .submitDepositApplication("Продолжить");
         });
         step("Проверка поля даты рождения на наличие текста с пометкой о вводе некорректного значения", () -> {
-            depositsPage.verifyPassportBirthDateFieldError();
+            depositsPage.verifyPassportBirthDateFieldError("Указана некорректная дата");
         });
     }
 
     @Test
+    @Tag("applicationFields")
     @DisplayName("Заполнение поля мобильного телефона неполным значением")
     void setPhoneInputFieldIncorrectValueTest() {
         step("Открытие страницы вклада", () -> {
@@ -92,14 +112,15 @@ public class DepositsPageTests extends TestBase {
         });
         step("Заполнение поля номера телефона коротким числовым значением", () -> {
             depositsPage.setPhoneInputField(testData.randomNumber)
-                    .submitDepositApplication();
+                    .submitDepositApplication("Продолжить");
         });
         step("Проверка поля номера телефона на наличие текста с пометкой о вводе некорректного значения", () -> {
-            depositsPage.verifyPhoneFieldError();
+            depositsPage.verifyPhoneFieldError("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67");
         });
     }
 
     @Test
+    @Tag("applicationFields")
     @DisplayName("Заполнение поля почты некорректным значением")
     void setEmailInputIncorrectValueTest() {
         step("Открытие страницы вклада", () -> {
@@ -107,10 +128,10 @@ public class DepositsPageTests extends TestBase {
         });
         step("Заполнение поля почты числовым значением", () -> {
             depositsPage.setEmailInputValue(testData.randomNumber)
-                    .submitDepositApplication();
+                    .submitDepositApplication("Продолжить");
         });
         step("Проверка поля почты на наличие текста с пометкой о вводе некорректного значения", () -> {
-            depositsPage.verifyEmailFieldError();
+            depositsPage.verifyEmailFieldError("Email введен некорректно. Пример: example@domain.ru");
         });
     }
 
@@ -127,5 +148,6 @@ public class DepositsPageTests extends TestBase {
             depositsPage.verifyNotResidentTextInformation();
         });
     }
+
 
 }
